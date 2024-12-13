@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:background="#43aa8b"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <ImageView
+
+        android:layout_width="200dp"
+        android:visibility="gone"
+        android:layout_height="100dp"
+        android:layout_above="@+id/card1"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/gfgblue" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card1"
+        android:layout_width="match_parent"
+
+        android:layout_centerInParent="true"
+
+        android:layout_margin="10dp"
+        app:cardElevation="1dp"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <EditText
+              android:id="@+id/password_login"
+              android:hint="submit your otp"
+              android:layout_width="300dp"
+              android:gravity="center"
+              android:padding="10dp"
+
+              android:inputType="number"
+              android:maxLength="6"
+              android:textStyle="bold"
+              android:layout_gravity="center"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="50dp"/>
+
+
+          <com.google.android.material.textfield.TextInputLayout
+
+              android:layout_width="match_parent"
+              android:visibility="invisible"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+             android:background="@drawable/card_shape"
+              android:layout_marginTop="1dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginBottom="20dp">
+
+              <com.google.android.material.textfield.TextInputEditText
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingStart="15dp"
+                  android:textSize="16dp"
+                  android:paddingEnd="5dp"
+                  android:background="@color/white"
+                   android:inputType="number"
+                  android:hint="OTP" />
+          </com.google.android.material.textfield.TextInputLayout>
+
+          <TextView
+              android:layout_width="150dp"
+              android:layout_height="wrap_content"
+              android:text="SUBMIT"
+
+              android:id="@+id/login"
+              android:textColor="@color/white"
+              android:layout_marginTop="1dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginBottom="10dp"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal"
+              android:background="@drawable/button_background"
+              android:padding="15dp"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+
+              android:gravity="center"
+              android:layout_marginTop="15dp"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+              
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:textSize="18dp"
+                  android:visibility="gone"
+                  android:layout_height="wrap_content"
+                  android:text="Don't have an account "/>
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:textStyle="bold"
+                  android:textSize="18dp"
+                  android:visibility="gone"
+
+                  android:layout_height="wrap_content"
+                  android:text="@string/signup"/>
+
+
+
+          </LinearLayout>
+              
+
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,240 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+
+    android:background="#F5F5F5"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.HomeFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customerMainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#063263"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:id="@+id/cart_vechile"
+            android:layout_width="50dp"
+            android:visibility="gone"
+            android:padding="5dp"
+            android:layout_gravity="start"
+            android:layout_height="?actionBarSize"
+            android:src="@drawable/glass">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#115c25"
+            android:text="LOGIN"
+            android:visibility="gone"
+            android:layout_gravity="start"/>
+
+        <ImageView
+            android:id="@+id/carts"
+            android:layout_width="70dp"
+            android:layout_gravity="start"
+            android:visibility="visible"
+            android:layout_marginLeft="5dp"
+            android:layout_height="70dp"
+            android:src="@drawable/gfglogo">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/toolsearchBarIcon"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="6dp"
+            android:visibility="gone"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:src="@drawable/search" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_image"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:padding="2dp"
+
+            android:visibility="visible"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_height="wrap_content" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+
+
+
+
+
+    <!-- ScrollView containing the rest of the content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/grocerryitems"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <!-- RecyclerView for grocery items -->
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+                android:text="see more"
+                android:visibility="gone"
+                android:layout_margin="0dp"/>
+            <View
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_gravity="end"
+
+                android:background="@android:color/darker_gray" />
+
+            <!-- ViewPager for image slider -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardCornerRadius="5dp"
+            app:cardElevation="3dp"
+            android:background="@color/quantum_orange"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+        </androidx.cardview.widget.CardView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/productsname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRODUCTS"
+                    android:lineSpacingExtra="10dp"
+                    android:textColor="@color/quantum_orange"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:textStyle="italic"
+                    android:textSize="19sp"
+                    android:letterSpacing="0.1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"/>
+
+                <View
+                    android:id="@+id/productline"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/black"
+                    android:backgroundTint="@color/quantum_orange"
+                    app:layout_constraintTop_toBottomOf="@id/productsname"
+                    app:layout_constraintStart_toStartOf="@id/productsname"
+                    app:layout_constraintEnd_toEndOf="@id/productsname"
+                    app:layout_constraintHorizontal_bias="0.5"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/grocery_recyclerview"
+                android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                android:layout_marginTop="12dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/grocerryitems"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
+
+
+            <!-- RecyclerView for electric items -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/electric_recyclerview"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:text="see more"
+                android:layout_margin="0dp"/>
+            <View
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_gravity="end"
+                android:background="@android:color/darker_gray" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

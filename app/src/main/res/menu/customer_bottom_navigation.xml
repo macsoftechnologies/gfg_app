@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/cust_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:iconTint="@color/quantum_bluegrey700"
+        android:title="Home" />
+    <item
+        android:id="@+id/cust_orders"
+        android:icon="@drawable/ic_baseline_stroller_24"
+
+        android:title="Products" />
+
+<!--    <item-->
+<!--        android:id="@+id/Add_products"-->
+<!--        android:icon="@drawable/ic_baseline_search_24"-->
+<!--        android:iconTint="@color/black"-->
+<!--        android:title="Orders" />-->
+<!--    <item-->
+<!--        android:id="@+id/cust_help"-->
+<!--        android:icon="@drawable/ic_baseline_help_24"-->
+<!--        android:iconTint="@color/black"-->
+<!--        android:title="Help" />-->
+    <item
+        android:id="@+id/cust_profile"
+        android:icon="@drawable/ic_baseline_person_outline_24"
+
+        android:title="Profile" />
+</menu>

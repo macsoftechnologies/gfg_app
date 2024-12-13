@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchProductsMapActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnlayout">
+
+        <fragment
+            android:id="@+id/mapsFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <AutoCompleteTextView
+            android:id="@+id/searchproductsLocation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="16dp"
+            android:inputType="none"
+            android:hint="Tap here...."
+            android:padding="10dp"
+            android:background="@drawable/search_bg"/>
+
+        <com.skyfishjy.library.RippleBackground
+            android:id="@+id/rippleSearchBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:rb_color="#479B04"
+            app:rb_duration="2000"
+            app:rb_radius="16dp"
+            app:rb_rippleAmount="2"
+            app:rb_scale="6">
+
+            <ImageView
+                android:id="@+id/markerSearchImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_baseline_location_on_24"
+                android:translationY="-18dp" />
+        </com.skyfishjy.library.RippleBackground>
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/btnlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Marker Location"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/Location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Getting Location"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:id="@+id/selectProductLocationBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#F36F27"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="PICK THIS ADDRESS"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</RelativeLayout>

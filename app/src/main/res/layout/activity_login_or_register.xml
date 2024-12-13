@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:background="#063263"
+    android:layout_height="match_parent"
+    tools:context=".LoginOrRegisterActivity">
+
+
+    <TextView
+        android:id="@+id/logintype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/background_bg"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="23dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/registertype"
+        android:layout_below="@id/logintype"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/background_bg"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Register"
+        android:textSize="23dp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
