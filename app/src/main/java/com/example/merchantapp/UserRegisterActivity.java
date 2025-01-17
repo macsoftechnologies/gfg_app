@@ -497,18 +497,23 @@ private void showImagePickerDialog() {
             public void onResponse(Call<CustomerRegistrationModel> call, Response<CustomerRegistrationModel> response) {
                 if (response.isSuccessful()) {
 
-                   Toast.makeText(UserRegisterActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    CustomerRegistrationModel customerRegistrationModel = response.body();
+                    if(customerRegistrationModel.getStatusCode() == 200) {
+
+                        Toast.makeText(UserRegisterActivity.this, "success", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(UserRegisterActivity.this,"kk"+longitude,Toast.LENGTH_SHORT).show();
 
 
-                    startActivity(new Intent(UserRegisterActivity.this, LoginActivity.class));
+                        startActivity(new Intent(UserRegisterActivity.this, OtpActivity.class));
 
-                    CustomerRegistrationModel customerRegistrationModel = response.body();
 
                         //  String cust = String.valueOf(customerRegistrationModel.getUserRegisterData().getLatitude());
-
+                    }
+                    else{
+                        Toast.makeText(UserRegisterActivity.this,customerRegistrationModel.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
+                else {
                     Toast.makeText(UserRegisterActivity.this, "Please enter correct details", Toast.LENGTH_SHORT).show();
 
                 }

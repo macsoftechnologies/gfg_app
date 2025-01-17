@@ -89,10 +89,18 @@ public class OtpActivity extends AppCompatActivity {
         ApiClient.getService().otplogin(body).enqueue(new Callback<OtpResponse>() {
             @Override
             public void onResponse(Call<OtpResponse> call, Response<OtpResponse> response) {
-                if(response.isSuccessful()){
-                    Intent intent = new Intent(OtpActivity.this,LoginActivity.class);
-                    intent.putExtra("number",mobilenumber);
-                    startActivity(intent);
+                if (response.isSuccessful()) {
+                    OtpResponse otpResponse = response.body();
+                    if (otpResponse.getStatusCode() == 200) {
+
+                        Intent intent = new Intent(OtpActivity.this, LoginActivity.class);
+                        intent.putExtra("number", mobilenumber);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(OtpActivity.this, "Please enter correct number", Toast.LENGTH_SHORT).show();
+
+                    }
+
                 }
             }
 

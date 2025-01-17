@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,6 +77,7 @@ public class AddProductFragment extends Fragment {
     private ImageView addimage,search_bar;
     private ImageView search_location;
     private ScrollView products_layout;
+    private ProgressBar circularprogressbar;
     private String lastQuery = "";
     private String userid,token;
 
@@ -187,7 +189,27 @@ public class AddProductFragment extends Fragment {
                 if(response.isSuccessful()){
                     UserModel userModel = response.body();
                     Data userData = userModel.getData();
-                //   address.setText(userData.getAddress());
+
+                    String add = userData.getAddress(); // Original address
+
+// Split the address by comma
+                    String[] addressParts = add.split(",");
+
+// Concatenate parts of the address up to "Visakhapatnam"
+                    StringBuilder extractedAddress = new StringBuilder();
+                    for (String part : addressParts) {
+                        extractedAddress.append(part.trim());
+                        if (part.trim().equalsIgnoreCase("Visakhapatnam")) {
+                            break; // Stop appending after reaching "Visakhapatnam"
+                        }
+                        extractedAddress.append(", "); // Add a comma between parts
+                    }
+
+// Set the extracted address
+                    String finalAddress = extractedAddress.toString();
+
+
+                    address.setText(finalAddress);
 
 
 
@@ -242,12 +264,28 @@ public class AddProductFragment extends Fragment {
                     GeocodeResponse geocodeResponse = response.body();
                     List<ResultsItem> resultsItems = geocodeResponse.getResults();
 
+                    String add = resultsItems.get(0).getFormattedAddress(); // Original address
+                    Toast.makeText(getContext(), "add: " + add, Toast.LENGTH_SHORT).show();
 
-                    String add = resultsItems.get(0).getFormattedAddress();
-                    Toast.makeText(getContext(), "add:"+add, Toast.LENGTH_SHORT).show();
+// Split the address by comma
+                    String[] addressParts = add.split(",");
+
+// Concatenate parts of the address up to "Visakhapatnam"
+                    StringBuilder extractedAddress = new StringBuilder();
+                    for (String part : addressParts) {
+                        extractedAddress.append(part.trim());
+                        if (part.trim().equalsIgnoreCase("Visakhapatnam")) {
+                            break; // Stop appending after reaching "Visakhapatnam"
+                        }
+                        extractedAddress.append(", "); // Add a comma between parts
+                    }
+
+// Set the extracted address
+                    String finalAddress = extractedAddress.toString();
                     updatedaddress.setVisibility(View.VISIBLE);
                     address.setVisibility(View.GONE);
-                    updatedaddress.setText(add);
+                    updatedaddress.setText(finalAddress);
+
                   //  searchProducts();
 
                 } else {
@@ -294,9 +332,11 @@ public class AddProductFragment extends Fragment {
                     if(customerSearchProductsResponse.getStatusCode() == 404){
                         Toast.makeText(getContext(),"No products found",Toast.LENGTH_SHORT).show();
                         cust_products_recylerview.setVisibility(View.GONE);
+
                     }
                     else {
                         cust_products_recylerview.setVisibility(View.VISIBLE);
+                        circularprogressbar.setVisibility(View.GONE);
                         if (customerSearchProductsResponse != null && customerSearchProductsResponse.getData() != null) {
 
                             List<AdminProductIdItem> adminProductIdItemList = new ArrayList<>();
@@ -366,6 +406,7 @@ public class AddProductFragment extends Fragment {
        search_bar = view.findViewById(R.id.search_bar);
        address = view.findViewById(R.id.addressid);
        updatedaddress = view.findViewById(R.id.updateaddress);
+       circularprogressbar = view.findViewById(R.id.circularProgressBar);
 
     }
 

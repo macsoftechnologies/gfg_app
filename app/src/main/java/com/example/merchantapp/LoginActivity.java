@@ -106,78 +106,85 @@ public class LoginActivity extends AppCompatActivity {
         ApiClient.getService().login(body).enqueue(new Callback<LoginOtpResponse>() {
             @Override
             public void onResponse(Call<LoginOtpResponse> call, Response<LoginOtpResponse> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful()) {
                     LoginOtpResponse loginResponse = response.body();
-                    Data data = loginResponse.getData();
-                    SharedPreferences sharedPreferences = getSharedPreferences("mykey", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    String value = new Gson().toJson(data);
-                    editor.putString("value", value);
-                    editor.apply();
+                    if (loginResponse.getStatusCode() == 200) {
+                        Data data = loginResponse.getData();
 
-                    Coordinates coordinates = data.getCoordinates();
-                    Double longitude = (Double) coordinates.getCoordinates().get(0);
-                    Double latitude = (Double) coordinates.getCoordinates().get(1);
+                        SharedPreferences sharedPreferences = getSharedPreferences("mykey", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        String value = new Gson().toJson(data);
+                        editor.putString("value", value);
+                        editor.apply();
 
-                    // Convert to String
-                    String latitudeString = String.valueOf(latitude);
-                    String longitudeString = String.valueOf(longitude);
+                        Coordinates coordinates = data.getCoordinates();
+                        Double longitude = (Double) coordinates.getCoordinates().get(0);
+                        Double latitude = (Double) coordinates.getCoordinates().get(1);
 
-                UserSessionManagement.getInstance(getApplicationContext()).setLatitude(latitudeString);
-                    UserSessionManagement.getInstance(getApplicationContext()).setLongitude(longitudeString);
+                        // Convert to String
+                        String latitudeString = String.valueOf(latitude);
+                        String longitudeString = String.valueOf(longitude);
 
-                 //   String lat =    UserSessionManagement.getInstance(getApplicationContext()).getLatitude();
+                        UserSessionManagement.getInstance(getApplicationContext()).setLatitude(latitudeString);
+                        UserSessionManagement.getInstance(getApplicationContext()).setLongitude(longitudeString);
 
-                   // Toast.makeText(LoginActivity.this,"lat"+lat,Toast.LENGTH_LONG).show();
+                        //   String lat =    UserSessionManagement.getInstance(getApplicationContext()).getLatitude();
 
-                    token =loginResponse.getToken();
-                     id = loginResponse.getData().getId();
-                     userid = loginResponse.getData().getUserId();
-                     String phno = loginResponse.getData().getMobileNumber();
+                        // Toast.makeText(LoginActivity.this,"lat"+lat,Toast.LENGTH_LONG).show();
 
-                     String lg = loginResponse.getData().getCoordinates().getType();
-                    UserSessionManagement.getInstance(getApplicationContext()).setUserid(id);
-                     UserSessionManagement.getInstance(getApplicationContext()).setUserids(userid);
-                    UserSessionManagement.getInstance(getApplicationContext()).setTokenId(token);
-                    UserSessionManagement.getInstance(getApplicationContext()).setPhno(phno);
+                        token = loginResponse.getToken();
+                        id = loginResponse.getData().getId();
+                        userid = loginResponse.getData().getUserId();
+                        String phno = loginResponse.getData().getMobileNumber();
 
-                 //   userProfile();
+                        String lg = loginResponse.getData().getCoordinates().getType();
+                        UserSessionManagement.getInstance(getApplicationContext()).setUserid(id);
+                        UserSessionManagement.getInstance(getApplicationContext()).setUserids(userid);
+                        UserSessionManagement.getInstance(getApplicationContext()).setTokenId(token);
+                        UserSessionManagement.getInstance(getApplicationContext()).setPhno(phno);
 
-                    //ld.commit();
-                    boolean isCustomer = false;
-                    boolean isMerchant = false;
-                    for (String role : data.getRole()) {
-                        if (role.equals("customer")) {
-                            isCustomer = true;
+                        //   userProfile();
 
+                        //ld.commit();
+                        boolean isCustomer = false;
+                        boolean isMerchant = false;
+                        for (String role : data.getRole()) {
+                            if (role.equals("customer")) {
+                                isCustomer = true;
+
+                            } else if (role.equals("merchant")) {
+                                isMerchant = true;
+                            }
                         }
-                        else if(role.equals("merchant")){
-                            isMerchant = true;
+
+                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
+                        intent.putExtra("openHomeFragment", true); // Optionally pass a flag to open a specific fragment
+
+                        if (isCustomer && isMerchant) {
+                            UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
+                            UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
+                            startActivity(intent);
+                            finish(); // Finish the LoginActivity to prevent navigating back to it
+                        } else if (isCustomer) {
+                            UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
+                            Toast.makeText(LoginActivity.this, "Logged in as customer", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                            finish(); // Finish the LoginActivity
+                        } else if (isMerchant) {
+                            UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
+                            Toast.makeText(LoginActivity.this, "Logged in as merchant", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                            finish(); // Finish the LoginActivity
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Please enter correct Password or email ", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-                    intent.putExtra("openHomeFragment", true); // Optionally pass a flag to open a specific fragment
-
-                    if (isCustomer && isMerchant) {
-                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-                        startActivity(intent);
-                        finish(); // Finish the LoginActivity to prevent navigating back to it
-                    } else if (isCustomer) {
-                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-                        Toast.makeText(LoginActivity.this, "Logged in as customer", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish(); // Finish the LoginActivity
-                    } else if (isMerchant) {
-                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-                        Toast.makeText(LoginActivity.this, "Logged in as merchant", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish(); // Finish the LoginActivity
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Password or email is wrong", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(LoginActivity.this,loginResponse.getMessage(),Toast.LENGTH_SHORT).show();
                     }
+
                 }
+
             }
 
 //                    if(isCustomer && isMerchant){

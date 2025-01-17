@@ -216,10 +216,23 @@ public class MerchantRegisterActivity extends AppCompatActivity {
                 public void onResponse(Call<MerchantRegistrationModel> call, Response<MerchantRegistrationModel> response) {
 
                     if (response.isSuccessful()) {
+                        MerchantRegistrationModel merchantRegistrationModel = response.body();
+                          if(merchantRegistrationModel.getStatusCode() == 200){
 
-                             Intent intent = new Intent(MerchantRegisterActivity.this,LoginActivity.class);
+                             Intent intent = new Intent(MerchantRegisterActivity.this,OtpActivity.class);
                              startActivity(intent);
                           }
+                          else{
+                              Toast.makeText(MerchantRegisterActivity.this,merchantRegistrationModel.getMessage(), Toast.LENGTH_SHORT).show();
+
+                          }
+
+                          }
+
+                    else{
+                        Toast.makeText(MerchantRegisterActivity.this, "Please enter correct details", Toast.LENGTH_SHORT).show();
+
+                    }
 
                 }
 

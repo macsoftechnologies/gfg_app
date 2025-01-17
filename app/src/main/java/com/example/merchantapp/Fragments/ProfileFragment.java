@@ -600,6 +600,9 @@ public class ProfileFragment extends Fragment {
                    // userIdprofile();
                     Toast.makeText(getContext(), "succesfull", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    Toast.makeText(getContext(), "Loading", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

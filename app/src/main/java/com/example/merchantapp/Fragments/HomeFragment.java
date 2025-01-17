@@ -244,7 +244,7 @@ public class HomeFragment extends Fragment  {
 
       sliders();
 
-      UserProfile();
+      //UserProfile();
 //        serachview.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -285,38 +285,38 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
-    private void UserProfile() {
-
-
-            Map<String,String> maps = new HashMap<>();
-            maps.put("_id",id);
-
-
-            ApiClient.getService().userid("Bearer "+token,maps).enqueue(new Callback<UserModel>() {
-                @Override
-                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                    if(response.isSuccessful()){
-                        UserModel userModel = response.body();
-                        Data userData = userModel.getData();
-                        String imageUrl = "https://api.gfg.org.in/"+userData.getProfileImage();
-
-                        Glide.with(getContext())
-                                .load(imageUrl)
-                                .placeholder(R.drawable.background_bg)
-                                .error(R.drawable.dotted_background)
-                                .into(user_image);
-
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UserModel> call, Throwable t) {
-
-                }
-            });
-
-    }
+//    private void UserProfile() {
+//
+//
+//            Map<String,String> maps = new HashMap<>();
+//            maps.put("_id",id);
+//
+//
+//            ApiClient.getService().userid("Bearer "+token,maps).enqueue(new Callback<UserModel>() {
+//                @Override
+//                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+//                    if(response.isSuccessful()){
+//                        UserModel userModel = response.body();
+//                        Data userData = userModel.getData();
+//                        String imageUrl = "https://api.gfg.org.in/"+userData.getProfileImage();
+//
+//                        Glide.with(getContext())
+//                                .load(imageUrl)
+//                                .placeholder(R.drawable.background_bg)
+//                                .error(R.drawable.dotted_background)
+//                                .into(user_image);
+//
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<UserModel> call, Throwable t) {
+//
+//                }
+//            });
+//
+//    }
 
     private void fetch() {
        ApiClient.getService().getCategorys().enqueue(new Callback<CategoriesResponse>() {
@@ -324,7 +324,6 @@ public class HomeFragment extends Fragment  {
            public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
 
                if(response.isSuccessful()){
-
                    CategoriesResponse categoriesResponse = response.body();
                    List<DataItem> categoryList = categoriesResponse.getData();
                    adapter = new ImageAdapter(getContext(), categoryList);

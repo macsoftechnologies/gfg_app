@@ -7,7 +7,7 @@ public class CustomerRegistrationModel {
 
     private String message;
 
-    private String statusCode;
+    private int statusCode;
 
     public UserRegisterData getUserRegisterData()
     {
@@ -29,12 +29,12 @@ public class CustomerRegistrationModel {
         this.message = message;
     }
 
-    public String getStatusCode ()
+    public int getStatusCode ()
     {
         return statusCode;
     }
 
-    public void setStatusCode (String statusCode)
+    public void setStatusCode (int statusCode)
     {
         this.statusCode = statusCode;
     }
