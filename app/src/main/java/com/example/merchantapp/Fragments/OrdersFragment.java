@@ -334,7 +334,23 @@ public class OrdersFragment extends Fragment  {
 
                                 String itemId = merchantProducts.get(position).getId(); // Assuming `getId()` returns the item ID
 
-                                merchantProductsAdapter.removeItem(itemId, position);
+                             //   merchantProductsAdapter.removeItem(itemId, position);
+
+                                new AlertDialog.Builder(requireContext())
+                                        .setTitle("Delete Item")
+                                        .setMessage("Are you sure you want to delete this item?")
+                                        .setPositiveButton("OK", (dialog, which) -> {
+                                            // Proceed with deletion
+                                            merchantProductsAdapter.removeItem(itemId, position);
+                                            dialog.dismiss();
+                                        })
+                                        .setNegativeButton("No", (dialog, which) -> {
+                                            // Restore the item
+                                            merchantProductsAdapter.notifyItemChanged(position);
+                                            dialog.dismiss();
+                                        })
+                                        .setCancelable(false)
+                                        .show();
 
                                 // Show a Snackbar with the "Swipe to delete" message
 

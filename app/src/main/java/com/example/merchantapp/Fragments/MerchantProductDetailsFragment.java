@@ -152,7 +152,7 @@ public class MerchantProductDetailsFragment extends Fragment {
               editprice.getEditText().setText(pricee);
               // Assuming you want the first item
               String url = "https://api.gfg.org.in/"+dataItem.getAdminProductId().get(0).getProductImage();
-              Glide.with(getContext())
+              Glide.with(requireContext())
                             //.load(locationbasedCategoriesModel.getCategories().get(0).getImage())
                             .load(url)
                             .centerCrop()

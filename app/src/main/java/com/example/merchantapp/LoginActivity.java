@@ -157,8 +157,12 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
 
-                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-                        intent.putExtra("openHomeFragment", true); // Optionally pass a flag to open a specific fragment
+//                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), CustomerMainActivity.class);
+                        intent.putExtra("openHomeFragment", true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                      // Optionally pass a flag to open a specific fragment
 
                         if (isCustomer && isMerchant) {
                             UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
@@ -187,48 +191,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
 
-//                    if(isCustomer && isMerchant){
-//                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-//                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-//                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//
-//                    }
-//
-//                    else if (isCustomer) {
-//                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-//                        Toast.makeText(LoginActivity.this, "Logged in as customer", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//
-//
-//                    }
-//                    else if(isMerchant){
-//                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-//                        Toast.makeText(LoginActivity.this, "Logged in as mercahnt", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this,CustomerMainActivity.class);
-////                        intent.putExtra("openMerchantHomeFragment", true);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//                    }
-//                    else{
-//                        Toast.makeText(LoginActivity.this,"Password or email is wrong",Toast.LENGTH_SHORT).show();
-//                    }
-//
-//
-//
-//                  //  Toast.makeText(LoginActivity.this,"toekm"+loginData.getMobileNumber(),Toast.LENGTH_SHORT).show();
-//
-//
-//
-//////                    LoginModel loginModel = response.body();
-////                    String token = loginModel.getToken();
-////                    Toast.makeText(LoginActivity.this,"toekm"+token,Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }
+
 
 
 
@@ -243,103 +206,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-//    private void  Loginapi(){
-//        Map<String,String> body = new HashMap<>();
-//        body.put("email",email_text);
-//        body.put("password",password_text);
-//
-//
-//        ApiClient.getService().login(body).enqueue(new Callback<LoginModel>() {
-//            @Override
-//            public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-//                if (response.isSuccessful()) {
-//                    LoginModel loginModel = response.body();
-//                   // UserSessionManagement.getInstance(getApplicationContext()).setLoginModel(loginModel);
-//
-//
-//                    LoginData loginData = loginModel.getData();
-////                    SharedPreferences sharedPreferences = getSharedPreferences("mykey", MODE_PRIVATE);
-////                    SharedPreferences.Editor editor = sharedPreferences.edit();
-////                    String value = new Gson().toJson(loginData);
-////                    editor.putString("value", value);
-////                    editor.apply();
-//
-//
-//                    token =loginModel.getToken();
-//                     id = loginModel.getData().get_id();
-//                     userid = loginModel.getData().getUserId();
-//
-//                     String phno = loginModel.getData().getMobileNumber();
-//                    UserSessionManagement.getInstance(getApplicationContext()).setUserid(id);
-//                     UserSessionManagement.getInstance(getApplicationContext()).setUserids(userid);
-//                    UserSessionManagement.getInstance(getApplicationContext()).setTokenId(token);
-//                    UserSessionManagement.getInstance(getApplicationContext()).setPhno(phno);
-//
-//                    userProfile();
-//
-//                    //ld.commit();
-//                    boolean isCustomer = false;
-//                    boolean isMerchant = false;
-//                    for (String role : loginData.getRole()) {
-//                        if (role.equals("customer")) {
-//                            isCustomer = true;
-//
-//                        }
-//                        else if(role.equals("merchant")){
-//                            isMerchant = true;
-//                        }
-//                    }
-//
-//                    if(isCustomer && isMerchant){
-//                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-//                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-//                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//
-//                    }
-//
-//                    else if (isCustomer) {
-//                        UserSessionManagement.saveBoolean(LoginActivity.this, "LOGIN", true);
-//                        Toast.makeText(LoginActivity.this, "Logged in as customer", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this, CustomerMainActivity.class);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//
-//
-//                    }
-//                    else if(isMerchant){
-//                        UserSessionManagement.saveeBoolean(LoginActivity.this, "MERCHANTLOGIN", true);
-//                        Toast.makeText(LoginActivity.this, "Logged in as mercahnt", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this,CustomerMainActivity.class);
-////                        intent.putExtra("openMerchantHomeFragment", true);
-//                        intent.putExtra("openHomeFragment", true);
-//                        startActivity(intent);
-//                    }
-//
-//
-//
-//                  //  Toast.makeText(LoginActivity.this,"toekm"+loginData.getMobileNumber(),Toast.LENGTH_SHORT).show();
-//
-//
-//
-//////                    LoginModel loginModel = response.body();
-////                    String token = loginModel.getToken();
-////                    Toast.makeText(LoginActivity.this,"toekm"+token,Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }
-//
-//            @Override
-//            public void onFailure(Call<LoginModel> call, Throwable t) {
-//                Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
-//
-//
-//    }
+
     private void userProfile(){
 
         Map<String,String> body = new HashMap<>();

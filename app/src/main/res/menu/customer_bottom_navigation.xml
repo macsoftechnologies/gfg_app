@@ -4,7 +4,7 @@
     <item
         android:id="@+id/cust_home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:iconTint="@color/quantum_bluegrey700"
+
         android:title="Home" />
     <item
         android:id="@+id/cust_orders"

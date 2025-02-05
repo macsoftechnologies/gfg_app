@@ -344,9 +344,7 @@ public class AddProductFragment extends Fragment {
                             for (DataItem dataItem : customerSearchProductsResponse.getData()) {
                                 adminProductIdItemList.addAll(dataItem.getAdminProductId());
                             }
-                            /// {
-                       // }
-                            //Toast.makeText(getContext(), "mjjg", Toast.LENGTH_SHORT).show();
+
 
                             customerSearchProductsAdapter = new CustomerSearchProductsAdapter(getContext(), adminProductIdItemList, dataItems);
                             cust_products_recylerview.setAdapter(customerSearchProductsAdapter);
@@ -369,18 +367,7 @@ public class AddProductFragment extends Fragment {
                         }
                     }
 
-//                        else  {
-//
-//                            customerSearchProductsAdapter = new CustomerSearchProductsAdapter(getContext(), adminProductIdItemList,dataItems);
-//                            cust_products_recylerview.setAdapter(customerSearchProductsAdapter);
-//
-//
-//                            //  customerSearchProductsAdapter.setProductList(adminProductIdItemList);
-//                           // cust_products_recylerview.setAdapter(customerSearchProductsAdapter);
-//                                  }
-//
-//                        //cust_products_recylerview.setVisibility(View.VISIBLE);
-//                    }
+
                 } else {
                     Toast.makeText(getContext(), "Error occured", Toast.LENGTH_SHORT).show();
                   //  cust_products_recylerview.setVisibility(View.GONE);

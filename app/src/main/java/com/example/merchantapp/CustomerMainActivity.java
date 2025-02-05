@@ -95,14 +95,14 @@ public class CustomerMainActivity extends AppCompatActivity   {
             switch (item.getItemId()) {
                 case R.id.cust_home:
                     loadFragment(new HomeFragment());
-                    bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
+                  //  bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
                  //   bottomNavigationView.getMenu().findItem(R.id.cust_home).setIcon(R.drawable.ic_baseline_home_24);  // Change 'ic_home' to your icon
 
 
                     return true;
                 case R.id.cust_orders:
                     loadFragment(new OrdersFragment());
-                    bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
+                   // bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
                     return true;
 
 //                case R.id.Add_products:
@@ -116,7 +116,7 @@ public class CustomerMainActivity extends AppCompatActivity   {
 
                 case R.id.cust_profile:
                     loadFragment(new ProfileFragment());
-                    bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
+                   // bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
                     return true;
                 default:
                     return false;
@@ -152,12 +152,7 @@ public class CustomerMainActivity extends AppCompatActivity   {
             // If already on HomeFragment, close the app
             finishAffinity();  // Closes the app completely
         } else {
-            // Clear the back stack and navigate back to HomeFragment
-         //  bottomNavigationView.setSelectedItemId(R.id.cust_home);
-//            bottomNavigationView.getMenu().findItem(R.id.cust_home).setIcon(R.drawable.ic_baseline_home_24);  // Change 'ic_home' to your icon
-         //   Toast.makeText(this, "activate", Toast.LENGTH_SHORT).show();
-
-            //  clearAllFragmentsFromBackStack();// Set Home as selected
+          clearAllFragmentsFromBackStack();// Set Home as selected
             loadHomeFragment(); // Load HomeFragment
 
             // Make sure to not call super.onBackPressed() here, as it would finish the activity

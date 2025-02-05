@@ -3,13 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+
+
     android:layout_height="match_parent"
     tools:context=".Fragments.MerchantProductDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
-
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:elevation="3dp"
+    android:backgroundTint="#c7defc"
+    android:layout_gravity="center"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="9dp"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -22,7 +32,7 @@
             android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/merchant_product_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -46,12 +56,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:textColor="@color/black"
 
                 android:layout_height="wrap_content"
@@ -74,12 +84,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:textSize="17dp"
+                android:textSize="16dp"
                  android:textColor="@color/black"
                 android:layout_height="wrap_content"
 
@@ -103,19 +113,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:padding="10dp"
+        android:padding="2dp"
         android:gravity="end"
         android:orientation="horizontal">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="EDIT PRICE :"
-            android:textStyle="bold"
+            android:layout_margin="0dp"
+            android:text="EDIT PRICE : "
             android:textColor="@color/quantum_orange"
-            android:layout_margin="5dp"
-            android:textSize="16dp"/>
-
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_price"
@@ -130,7 +140,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:paddingStart="0dp"
                 android:textSize="16dp"
                  android:focusable="true"
@@ -183,6 +193,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                  android:layout_margin="15dp"
+
+                android:textColor="@color/quantum_orange"
                 android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:text="delete"/>
@@ -191,5 +203,5 @@
 
     </LinearLayout>
 
-
+</androidx.cardview.widget.CardView>
 </FrameLayout>

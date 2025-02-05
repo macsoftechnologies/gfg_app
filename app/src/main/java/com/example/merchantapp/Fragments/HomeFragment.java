@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,10 +70,11 @@ public class HomeFragment extends Fragment  {
     private static final String ARG_PARAM2 = "param2";
      private RecyclerView recyclerView,electricrecyclerView;
      private ImageElectricAdapter adapters;
+     private ProgressBar circularprogressbar;
     private ImageAdapter adapter;
     private Slider slider;
     private TextView username;
-    private TextView productname;
+    private TextView productname,users_location;
     private Context context;
     private String lng,lat,token;
     private ViewPager viewPager;
@@ -155,6 +157,9 @@ public class HomeFragment extends Fragment  {
       //  serachview = view.findViewById(R.id.cust_home_searchView);
         cart = view.findViewById(R.id.cart_vechile);
         productname = view.findViewById(R.id.productsname);
+        users_location = view.findViewById(R.id.user_location);
+        circularprogressbar = view.findViewById(R.id.home_circularProgressBar);
+
 
        token= UserSessionManagement.getInstance(getContext()).getTokenId();
        lat = UserSessionManagement.getInstance(getContext()).getLatitude();
@@ -207,7 +212,7 @@ public class HomeFragment extends Fragment  {
 
                 ProfileFragment profileFragment = new ProfileFragment();
                 addToFragmentContainer(profileFragment, true, PROGFILE_FRAGMENT);
-                ((CustomerMainActivity) getActivity()).setProfileIconColor("#0a7094");  // Replace with your activity's name
+              //  ((CustomerMainActivity) getActivity()).setProfileIconColor("#0a7094");  // Replace with your activity's name
 
                 //  bottomNavigationView.setItemIconTintList(createColorStateList("#0a7094"));
 
@@ -244,19 +249,8 @@ public class HomeFragment extends Fragment  {
 
       sliders();
 
-      //UserProfile();
-//        serachview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                OrdersFragment ordersFragment = new OrdersFragment();
-////                Bundle bundle = new Bundle();
-////
-////                bundle.putSerializable("categoryModel", products);
-////                productDetailsFragment.setArguments(bundle);
-//                addToFragmentContainer(ordersFragment, true, ORDERS_FRAGMENT_TAG);
-//
-//            }
-//        });
+      UserProfile();
+
 
 
 
@@ -267,10 +261,7 @@ public class HomeFragment extends Fragment  {
 
 
             recyclerView.setLayoutManager(new  GridLayoutManager(getContext(), 3));
-//
-//        // Initialize adapter and set it to RecyclerView
-//        adapter = new ImageAdapter(imageIds);
-//        recyclerView.setAdapter(adapter);
+
         fetch();
 
 
@@ -285,66 +276,109 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
-//    private void UserProfile() {
-//
-//
-//            Map<String,String> maps = new HashMap<>();
-//            maps.put("_id",id);
-//
-//
-//            ApiClient.getService().userid("Bearer "+token,maps).enqueue(new Callback<UserModel>() {
-//                @Override
-//                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-//                    if(response.isSuccessful()){
-//                        UserModel userModel = response.body();
-//                        Data userData = userModel.getData();
-//                        String imageUrl = "https://api.gfg.org.in/"+userData.getProfileImage();
-//
+    private void UserProfile() {
+
+
+            Map<String,String> maps = new HashMap<>();
+            maps.put("_id",id);
+
+
+            ApiClient.getService().userid("Bearer "+token,maps).enqueue(new Callback<UserModel>() {
+                @Override
+                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                    if(response.isSuccessful()){
+                        UserModel userModel = response.body();
+                        Data userData = userModel.getData();
+                        String add = userData.getAddress(); // Original address
+
+// Split the address by commas
+                        String[] addressParts = add.split(",");
+
+                        String area = "";
+                        String nextPart = "";
+                        boolean foundDistrict = false;
+
+// Iterate through address parts
+                        for (int i = 0; i < addressParts.length; i++) {
+                            String part = addressParts[i].trim(); // Remove extra spaces
+
+                            // Check if the current part is "Visakhapatnam"
+                            if (part.equalsIgnoreCase("Visakhapatnam")) {
+                                foundDistrict = true; // Mark that we found the district
+                                break; // Stop further processing
+                            }
+
+                            // Store the area name (just before "Visakhapatnam")
+                            area = part;
+
+                            // Store the next part after the area (if available)
+                            if (i + 1 < addressParts.length) {
+                                nextPart = addressParts[i + 1].trim();
+                            }
+                        }
+
+// Construct the final extracted address
+                        String extractedAddress = area + ", " + nextPart;
+
+// Set or print the extracted address
+//                        System.out.println(extractedAddress);
+
+
+
+                        users_location.setText(extractedAddress);
+                      //  String imageUrl = "https://api.gfg.org.in/"+userData.getProfileImage();
+
 //                        Glide.with(getContext())
 //                                .load(imageUrl)
 //                                .placeholder(R.drawable.background_bg)
 //                                .error(R.drawable.dotted_background)
 //                                .into(user_image);
-//
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<UserModel> call, Throwable t) {
-//
-//                }
-//            });
-//
-//    }
+
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserModel> call, Throwable t) {
+
+                }
+            });
+
+    }
 
     private void fetch() {
        ApiClient.getService().getCategorys().enqueue(new Callback<CategoriesResponse>() {
            @Override
            public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
 
-               if(response.isSuccessful()){
+               if(response.isSuccessful()) {
                    CategoriesResponse categoriesResponse = response.body();
-                   List<DataItem> categoryList = categoriesResponse.getData();
-                   adapter = new ImageAdapter(getContext(), categoryList);
 
-                   adapter.setImageAdapterRecyclerViewItemClickListener(new ImageAdapter.ImageAdapterRecyclerViewItemClickListener() {
-                       @Override
-                       public void onItemClickListner(List<DataItem> dataItemList, int position) {
-                           AddProductFragment addProductFragment = new AddProductFragment();
+                   if (categoriesResponse.getStatusCode() == 404) {
+                       recyclerView.setVisibility(View.GONE);
+                       circularprogressbar.setVisibility(View.VISIBLE);
+                   } else {
+                       List<DataItem> categoryList = categoriesResponse.getData();
+                       adapter = new ImageAdapter(getContext(), categoryList);
+                       circularprogressbar.setVisibility(View.GONE);
+                       adapter.setImageAdapterRecyclerViewItemClickListener(new ImageAdapter.ImageAdapterRecyclerViewItemClickListener() {
+                           @Override
+                           public void onItemClickListner(List<DataItem> dataItemList, int position) {
+                               AddProductFragment addProductFragment = new AddProductFragment();
 
-                           Bundle bundle = new Bundle();
-                           bundle.putString("categoryid",dataItemList.get(position).getCategoryId());
-                           addProductFragment.setArguments(bundle);
-                           addToFragmentContainer(addProductFragment,true,ADDPRODUCT_FRAGMENT);
+                               Bundle bundle = new Bundle();
+                               bundle.putString("categoryid", dataItemList.get(position).getCategoryId());
+                               addProductFragment.setArguments(bundle);
+                               addToFragmentContainer(addProductFragment, true, ADDPRODUCT_FRAGMENT);
 
 
+                           }
+                       });
 
-                       }
-                   });
-
-                   recyclerView.setAdapter(adapter);
-               } else {
+                       recyclerView.setAdapter(adapter);
+                   }
+               }
+               else {
                    Toast.makeText(getContext(), "Failed to retrieve categories", Toast.LENGTH_SHORT).show();
                }
 
@@ -441,18 +475,6 @@ public class HomeFragment extends Fragment  {
     }
 
 
-//    @Override
-//    public void onBackPressed() {
-//       Toast.makeText(getContext(),":jj",Toast.LENGTH_LONG).show();
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            Fragment currentFragment = fragmentManager.findFragmentById(R.id.customer_fragments_container);
-//
-//            if (currentFragment instanceof HomeFragment) {
-//                // If the current fragment is HomeFragment, close the app
-//                 getActivity().finish();
-//            }
-//
-//        }
 
     }
 

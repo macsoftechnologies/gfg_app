@@ -123,7 +123,7 @@ public class MerchantDetailsFragment extends Fragment {
     private void castingViews(View view) {
         merchantname = view.findViewById(R.id.merchant_name);
         merchantlocation = view.findViewById(R.id.merchant_shop_location);
-     //   merchantshop = view.findViewById(R.id.merchant_shop_name);
+       merchantshop = view.findViewById(R.id.merchant_shop_name);
         merchantnumber = view.findViewById(R.id.merchant_number);
         productspecifications = view.findViewById(R.id.specifications);
         productname =view.findViewById(R.id.product_name);
@@ -149,40 +149,44 @@ public class MerchantDetailsFragment extends Fragment {
         ApiClient.getService().productbYId("Bearer "+token,body).enqueue(new Callback<ProductByIdResponse>() {
             @Override
             public void onResponse(Call<ProductByIdResponse> call, Response<ProductByIdResponse> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful()) {
                     ProductByIdResponse productByIdResponse = response.body();
+                    if (productByIdResponse.getStatusCode() == 404) {
+                        Toast.makeText(getContext(), productByIdResponse.getMessage() + "", Toast.LENGTH_SHORT).show();
+                    } else {
 
-                    DataItem dataItem = productByIdResponse.getData().get(0);
+                        DataItem dataItem = productByIdResponse.getData().get(0);
 
 
+                        AdminProductIdItem adminProductIdItem = productByIdResponse.getData().get(0).getAdminProductId().get(0);
+                        productname.setText(adminProductIdItem.getProductName());
 
-                    AdminProductIdItem adminProductIdItem = productByIdResponse.getData().get(0).getAdminProductId().get(0);
-                    productname.setText(adminProductIdItem.getProductName());
+                        productprice.setText("₹ " + dataItem.getPrice());
 
-                       productprice.setText("₹ "+dataItem.getPrice());
+                        UserIdItem userIdItem = dataItem.getUserId().get(0);
+                        merchantname.setText(" " + userIdItem.getUserName());
+                        merchantnumber.setText(" " + userIdItem.getMobileNumber());
+                        merchantshop.setText(" " + userIdItem.getShopName());
 
-                    UserIdItem userIdItem = dataItem.getUserId().get(0);
-                    merchantname.setText(" "+userIdItem.getUserName());
-                    merchantnumber.setText(" "+userIdItem.getMobileNumber());
-
-                    merchantlocation.setText(" "+userIdItem.getShopLocation());
-                    String url ="https://api.gfg.org.in/"+adminProductIdItem.getProductImage();
-                    Glide.with(getContext())
-                            //.load(locationbasedCategoriesModel.getCategories().get(0).getImage())
-                            .load(url)
-                            .centerCrop()
-                            .fitCenter()
-                            .into(product_img);
-                    String specsString = productSpecificationsToString(adminProductIdItem.getProductSpecifications());
-                    productspecifications.setText(specsString);
-                 //   merchantshop.setText(userIdItem.getShopName());
+                        merchantlocation.setText(" " + userIdItem.getShopLocation());
+                        String url = "https://api.gfg.org.in/" + adminProductIdItem.getProductImage();
+                        Glide.with(getContext())
+                                //.load(locationbasedCategoriesModel.getCategories().get(0).getImage())
+                                .load(url)
+                                .centerCrop()
+                                .fitCenter()
+                                .into(product_img);
+                        String specsString = productSpecificationsToString(adminProductIdItem.getProductSpecifications());
+                        productspecifications.setText(specsString);
+                        //   merchantshop.setText(userIdItem.getShopName());
 //                    com.example.merchantapp.Model.ProductbhyIdModel.DataItem dataItem = productByIdResponse.getData().get(0);
 //                    List<UserIdItem> UserIdItem = dataItem.getUserId();
 //
 
 
-                    // Assuming getAdminProductId() returns a list
-                    // adminProductIdItem = adminProductIdItems.get(0);
+                        // Assuming getAdminProductId() returns a list
+                        // adminProductIdItem = adminProductIdItems.get(0);
+                    }
                 }
             }
 
